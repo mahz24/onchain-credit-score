@@ -1,12 +1,22 @@
 "use client";
 
 import { useConnection, useConnect, useDisconnect, useConnectors } from "wagmi";
+import { useHasMounted } from "@/lib/useHasMounted";
 
 export function ConnectWallet() {
+  const mounted = useHasMounted();
   const connect = useConnect();
   const disconnect = useDisconnect();
   const connectors = useConnectors();
   const { isConnected, address } = useConnection();
+
+  if (!mounted) {
+    return (
+      <button className="rounded-full bg-white text-black px-4 py-2 text-sm font-medium">
+        Connect Wallet
+      </button>
+    );
+  }
 
   if (isConnected) {
     return (
@@ -14,7 +24,10 @@ export function ConnectWallet() {
         <span className="text-sm font-mono">
           {address?.slice(0, 6)}...{address?.slice(-4)}
         </span>
-        <button onClick={() => disconnect.mutate()} className="text-sm underline">
+        <button
+          onClick={() => disconnect.mutate()}
+          className="text-sm underline"
+        >
           Disconnect
         </button>
       </div>

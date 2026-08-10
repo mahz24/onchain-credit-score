@@ -1,29 +1,15 @@
 "use client";
 
-import { useReadContract } from "wagmi";
-import {
-  CREDIT_SCORE_ADDRESS,
-  CREDIT_SCORE_ABI,
-} from "@/lib/contracts/creditScore";
+type CreditScoreCardProps = {
+  data: readonly [bigint, bigint, bigint, bigint] | undefined;
+  isLoading: boolean;
+};
 
-export function CreditScoreCard({ address }: { address: `0x${string}` }) {
-  const { data, isLoading, isError } = useReadContract({
-    address: CREDIT_SCORE_ADDRESS,
-    abi: CREDIT_SCORE_ABI,
-    functionName: "profiles",
-    args: [address],
-  });
-
+export function CreditScoreCard({ data, isLoading }: CreditScoreCardProps) {
   if (isLoading) return <p>Loading score...</p>;
-  if (isError) return <p>Error fetching score.</p>;
   if (!data) return null;
 
-  const [score, lastUpdated, firstSeenBlock, interactionCount] = data as [
-    bigint,
-    bigint,
-    bigint,
-    bigint,
-  ];
+  const [score, lastUpdated, firstSeenBlock, interactionCount] = data;
 
   return (
     <div className="rounded-lg border border-black/[.08] p-6 dark:border-white/[.145]">
