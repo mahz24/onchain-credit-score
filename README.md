@@ -40,4 +40,4 @@ The contract is vulnerable to flash-loan balance manipulation, since `balancePoi
 
 **Marco Zuñiga** — Full Stack Engineer transitioning into blockchain development, with a background in fintech backend systems (credit flows, payment processing).
 
-[GitHub](https://github.com/mahz24) · [LinkedIn](#)
+[GitHub](https://github.com/mahz24) · [LinkedIn](https://www.linkedin.com/in/marco-zu%C3%B1iga-29b938200/)
