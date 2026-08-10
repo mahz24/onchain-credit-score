@@ -3,7 +3,7 @@
 A Solidity smart contract — with a companion Next.js frontend — that calculates a wallet's "credit score" (0-1000) based on on-chain signals: ETH balance, wallet age (relative to first interaction), and activity level. Built as a proof-of-concept bridging fintech credit-scoring concepts with on-chain data — an intersection of my background in fintech backend systems and smart contract development.
 
 **Live on Sepolia**: [`0x0Ccf15a73f48E99EA0676a7A935D27Fce1272151`](https://sepolia.etherscan.io/address/0x0ccf15a73f48e99ea0676a7a935d27fce1272151) (verified)
-**Live demo (frontend)**: [link once deployed]
+**Live demo (frontend)**: [onchain-credit-score-sand.vercel.app]
 
 ## Repository Structure
 
