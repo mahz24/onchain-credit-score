@@ -45,6 +45,30 @@ activityPoints = min(interactionCount, ACTIVITY_CAP) * 250 / ACTIVITY_CAP
 score = balancePoints + agePoints + activityPoints
 ```
 
+## Known Limitations / Attack Vectors
+
+### Flash Loan Manipulation
+**Issue**: `_calculateScore` reads `user.balance` as an instantaneous snapshot.
+An attacker can take a flash loan, call `updateMyScore()` within the same
+transaction to inflate their `balancePoints`, repay the loan, and keep the
+inflated score permanently stored — all atomically, with no real capital at risk.
+
+**Status**: Identified, not mitigated in this MVP. Documented as a known scope
+decision.
+
+**Mitigation strategy (not implemented)**: Split the update flow into two
+separate calls across different blocks — `requestUpdate()` records the
+requesting block, and `finalizeUpdate()` can only execute in a later block,
+reading the balance only then. Since a flash loan is repaid within a single
+atomic transaction (and therefore a single block), this breaks the attack:
+the borrowed funds must be returned before the second block — and thus the
+second call — can occur. This is the same pattern used by protocols like
+Compound for time-weighted voting power.
+
+**Why not implemented now**: Adds meaningful complexity (state tracking across
+two calls, cooldown windows) for an MVP whose primary goal is demonstrating
+the core scoring mechanism and security-aware design decisions, not
+production-grade robustness.
 
 
 ## Open / Upcoming Decisions
