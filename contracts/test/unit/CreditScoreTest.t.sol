@@ -75,4 +75,18 @@ contract CreditScoreTest is Test {
         (uint256 score,,,) = creditScore.profiles(user);
         assertEq(score, 5); // The score should be updated to the minimal score
     }
+
+    function testFuzzScoreNeverExceedsMax(uint256 randomBalance, uint256 randomCalls) public {
+        uint256 balance = bound(randomBalance, 0, 1000 ether);
+        uint256 calls = bound(randomCalls, 1, 100);
+
+        vm.deal(user, balance);
+        for (uint256 i = 0; i < calls; i++) {
+            vm.prank(user);
+            creditScore.updateMyScore();
+        }
+
+        (uint256 score,,,) = creditScore.profiles(user);
+        assertLe(score, 1000); // The score should never exceed 1000
+    }
 }
